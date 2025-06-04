@@ -1,6 +1,9 @@
 .favorites {
-  padding: 2rem;
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap; /* Optional: wraps to the next line if not enough space */
+  justify-content: center; /* or space-between */
+  align-items: flex-start;
+  gap: 1rem; /* spacing between cards */
   box-sizing: border-box;
 }
 

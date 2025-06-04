@@ -1,4 +1,4 @@
-import './css/App.css';
+import './css/App.scss';
 import MovieCard from './components/MovieCard';
 import Home from './Pages/Home';
 import { Routes, Route } from 'react-router-dom';
@@ -24,4 +24,3 @@ function App() {
 export default App
 
 
-// App.jsx
