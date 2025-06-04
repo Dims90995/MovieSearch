@@ -10,3 +10,11 @@ npm install jsonwebtoken
 npm install mongoose
 npm install -D sass-embedded
 npm run build
+npm install bcrypt
+npm install express mongoose cors bcrypt
+npm init -y
+npm install dotenv
+
+
+to run backend :
+node server/index.js
