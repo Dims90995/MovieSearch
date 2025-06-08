@@ -6,7 +6,7 @@ import Favorites from './Pages/Favorites';
 import NavBar from './components/NavBar';
 import { MovieProvider } from './contexts/MovieContext';
 import LoginRegisterPage from './Pages/LoginRegisterPage';
-
+import UserHome from "./Pages/UserHome";
 
 function App() {
   
@@ -18,6 +18,7 @@ function App() {
   <Route path='/' element={<Home />} />
   <Route path='/favorites' element={<Favorites/>} />
   <Route path="/auth" element={<LoginRegisterPage />} />
+  <Route path="/userhome" element={<UserHome />} />
 </Routes>
 </main>
 </MovieProvider>

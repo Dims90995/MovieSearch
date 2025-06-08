@@ -15,7 +15,7 @@ function MovieCard({ movie }) {
     const [avgRating, setAvgRating] = useState("N/A")
 
     useEffect(() => {
-        // Fetch user's rating
+        
         getUserRating(movie.id)
             .then(data => {
                 if (typeof data.rating === "number") {
@@ -26,7 +26,7 @@ function MovieCard({ movie }) {
                 console.error("Error fetching user rating:", err)
             })
 
-        // Fetch average rating
+        
         getAverageRating(movie.id)
             .then(data => {
                 const avg = data.average

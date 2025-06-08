@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { registerUser, loginUser } from "../services/api";
-import "../css/Login.scss"; 
+import { useNavigate } from "react-router-dom";
+import "../css/Login.scss";
 
 export default function LoginRegisterPage() {
   const [isRegister, setIsRegister] = useState(false);
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const toggleMode = () => {
     setMessage("");
@@ -22,12 +25,20 @@ export default function LoginRegisterPage() {
 
     const { username, email, password } = form;
 
-    const result = isRegister
-      ? await registerUser({ username, email, password })
-      : await loginUser({ email, password });
-    console.log("Register result:", result);
+    try {
+      const result = isRegister
+        ? await registerUser({ username, email, password })
+        : await loginUser({ email, password });
 
-    setMessage(result.message || result.error || (isRegister ? "Registered!" : "Logged in!"));
+      setMessage(result.message || result.error || (isRegister ? "Registered!" : "Logged in!"));
+
+      if (result.token && !isRegister) {
+        navigate("/userhome");
+      }
+    } catch (err) {
+      setMessage("Something went wrong.");
+      console.error(err);
+    }
   };
 
   return (
