@@ -16,17 +16,16 @@ export const searchMovies = async (query) => {
   return data.results;
 };
 
-// === Your MongoDB backend API ===
-const BACKEND_BASE = "http://localhost:27017";
 
-// Get saved movies from your database
+const BACKEND_BASE = "http://localhost:5000";
+
+
 export const getSavedMovies = async () => {
   const response = await fetch(`${BACKEND_BASE}/movies`);
   const data = await response.json();
   return data;
 };
 
-// Save a movie to your database
 export const saveMovie = async (movie) => {
   const response = await fetch(`${BACKEND_BASE}/movies`, {
     method: 'POST',
@@ -39,7 +38,7 @@ export const saveMovie = async (movie) => {
   return data;
 };
 
-// === User API ===
+
 export const createUser = async (user) => {
   const res = await fetch("http://localhost:5000/users", {
     method: "POST",
@@ -56,21 +55,6 @@ export const getUsers = async () => {
   return data;
 };
 
-export const loginUser = async (email, password) => {
-  const res = await fetch("http://localhost:5000/users/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
-  });
-
-  const data = await res.json();
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-  }
-  return data;
-};
-
-
 export const getUserProfile = async () => {
   const token = localStorage.getItem("token");
 
@@ -81,4 +65,32 @@ export const getUserProfile = async () => {
   });
 
   return res.json();
+};
+
+
+// Register new user
+export const registerUser = async (user) => {
+  const res = await fetch(`${BACKEND_BASE}/users`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user)
+  });
+  return res.json();
+};
+
+// Login user
+export const loginUser = async ({ email, password }) => {
+  const res = await fetch(`${BACKEND_BASE}/users/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
+
+  const data = await res.json();
+
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+  }
+
+  return data;
 };

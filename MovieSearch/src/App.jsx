@@ -5,6 +5,8 @@ import { Routes, Route } from 'react-router-dom';
 import Favorites from './Pages/Favorites';
 import NavBar from './components/NavBar';
 import { MovieProvider } from './contexts/MovieContext';
+import LoginRegisterPage from './Pages/LoginRegisterPage';
+
 
 function App() {
   
@@ -15,11 +17,14 @@ function App() {
 <Routes>
   <Route path='/' element={<Home />} />
   <Route path='/favorites' element={<Favorites/>} />
+  <Route path="/auth" element={<LoginRegisterPage />} />
 </Routes>
 </main>
 </MovieProvider>
   );
 }
+
+
 
 export default App
 
