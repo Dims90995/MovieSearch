@@ -40,7 +40,7 @@ export const saveMovie = async (movie) => {
 
 
 export const createUser = async (user) => {
-  const res = await fetch("http://localhost:5000/users", {
+  const res = await fetch("http://localhost:5000/yourdbname/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user)
@@ -50,7 +50,7 @@ export const createUser = async (user) => {
 
 
 export const getUsers = async () => {
-  const response = await fetch("http://localhost:5000/users");
+  const response = await fetch("http://localhost:5000/yourdbname/users");
   const data = await response.json();
   return data;
 };
@@ -94,3 +94,56 @@ export const loginUser = async ({ email, password }) => {
 
   return data;
 };
+
+export const saveRating = async (movieId, rating) => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`${BACKEND_BASE}/api/ratings`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ movieId, rating })
+  });
+
+  return res.json();
+};
+
+export const getUserRating = async (movieId) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.warn("No token found — user probably not logged in");
+    return { rating: 0 }; 
+
+  }
+
+  const res = await fetch(`${BACKEND_BASE}/api/ratings/user/${movieId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!res.ok) {
+  
+
+    if (res.status === 401 || res.status === 403) {
+      console.warn(`Token rejected with status ${res.status}`);
+      localStorage.removeItem("token"); 
+
+      return { rating: 0 };
+    }
+
+    throw new Error(`Failed to fetch user rating: ${res.status}`);
+  }
+
+  return res.json();
+};
+
+export const getAverageRating = async (movieId) => {
+  const res = await fetch(`${BACKEND_BASE}/api/ratings/average/${movieId}`);
+  return res.json();
+};
+
+

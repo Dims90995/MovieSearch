@@ -17,4 +17,4 @@ npm install dotenv
 
 
 to run backend :
-node server/index.js
+node index.js
