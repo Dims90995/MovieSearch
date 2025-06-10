@@ -7,6 +7,8 @@ import NavBar from './components/NavBar';
 import { MovieProvider } from './contexts/MovieContext';
 import LoginRegisterPage from './Pages/LoginRegisterPage';
 import UserHome from "./Pages/UserHome";
+import MovieDetails from "./Pages/MovieDetails";
+import { BrowserRouter as Router} from "react-router-dom";
 
 function App() {
   
@@ -19,6 +21,7 @@ function App() {
   <Route path='/favorites' element={<Favorites/>} />
   <Route path="/auth" element={<LoginRegisterPage />} />
   <Route path="/userhome" element={<UserHome />} />
+  <Route path="/movie/:id" element={<MovieDetails />} />
 </Routes>
 </main>
 </MovieProvider>

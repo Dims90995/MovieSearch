@@ -147,3 +147,8 @@ export const getAverageRating = async (movieId) => {
 };
 
 
+export const getMovieDetails = async (movieId) => {
+  const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
+  if (!response.ok) throw new Error("Failed to fetch movie details");
+  return response.json();
+};
