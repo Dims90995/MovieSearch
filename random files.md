@@ -4,3 +4,6 @@
   "requires": true,
   "packages": {}
 }
+
+
+const BACKEND_BASE = "http://localhost:5000";
