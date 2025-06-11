@@ -5,25 +5,31 @@ require('dotenv').config();
 
 const userRoutes = require('./routes/users');
 const ratingRoutes = require('./routes/ratings');
+const authRoutes = require('./routes/auth'); // ✅ NEW
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
 
+app.use(cors({
+  origin: '*', 
+  credentials: true
+}));
+app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-})  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
-
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.log(err));
 
 app.use('/users', userRoutes);
 app.use('/api/ratings', ratingRoutes);
+app.use('/auth', authRoutes); // ✅ NEW
 
 
 app.get('/', (req, res) => res.send("API is working"));
 
 
-app.listen(5000, () => console.log('Server running on port 5000'));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
