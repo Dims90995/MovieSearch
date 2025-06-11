@@ -5,8 +5,7 @@ require('dotenv').config();
 
 const userRoutes = require('./routes/users');
 const ratingRoutes = require('./routes/ratings');
-const authRoutes = require('./routes/auth'); // ✅ NEW
-
+const authRoutes = require('./routes/auth');
 const app = express();
 
 
@@ -25,7 +24,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use('/users', userRoutes);
 app.use('/api/ratings', ratingRoutes);
-app.use('/auth', authRoutes); // ✅ NEW
+app.use('/auth', authRoutes); 
 
 
 app.get('/', (req, res) => res.send("API is working"));
