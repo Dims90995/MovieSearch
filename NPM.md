@@ -15,6 +15,7 @@ npm install express mongoose cors bcrypt
 npm init -y
 npm install dotenv
 npm install --save-dev vite
+npm install cors
 
 
 to run backend :
