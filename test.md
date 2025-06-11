@@ -1,10 +1,9 @@
 const API_KEY = "afe1bd10006f94ebd4177f24413c2493";
 const BASE_URL = "https://api.themoviedb.org/3";
 
-
 const BACKEND_BASE = import.meta.env.VITE_API_URL;
 
-
+// TMDB endpoints
 export const getPopularMovies = async () => {
   const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
   const data = await response.json();
@@ -20,22 +19,30 @@ export const searchMovies = async (query) => {
 };
 
 
+
+
+
 export const getSavedMovies = async () => {
   const response = await fetch(`${BACKEND_BASE}/movies`);
-  return response.json();
+  const data = await response.json();
+  return data;
 };
 
 export const saveMovie = async (movie) => {
   const response = await fetch(`${BACKEND_BASE}/movies`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(movie)
   });
-  return response.json();
+  const data = await response.json();
+  return data;
 };
 
+
 export const createUser = async (user) => {
-  const res = await fetch(`${BACKEND_BASE}/yourdbname/users`, {
+  const res = await fetch("http://localhost:5000/yourdbname/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user)
@@ -43,15 +50,17 @@ export const createUser = async (user) => {
   return res.json();
 };
 
+
 export const getUsers = async () => {
-  const response = await fetch(`${BACKEND_BASE}/yourdbname/users`);
-  return response.json();
+  const response = await fetch("http://localhost:5000/yourdbname/users");
+  const data = await response.json();
+  return data;
 };
 
 export const getUserProfile = async () => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${BACKEND_BASE}/users/profile`, {
+  const res = await fetch("http://localhost:5000/users/profile", {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -60,6 +69,8 @@ export const getUserProfile = async () => {
   return res.json();
 };
 
+
+// Register new user
 export const registerUser = async (user) => {
   const res = await fetch(`${BACKEND_BASE}/users`, {
     method: "POST",
@@ -69,6 +80,7 @@ export const registerUser = async (user) => {
   return res.json();
 };
 
+// Login user
 export const loginUser = async ({ email, password }) => {
   const res = await fetch(`${BACKEND_BASE}/users/login`, {
     method: "POST",
@@ -105,7 +117,8 @@ export const getUserRating = async (movieId) => {
 
   if (!token) {
     console.warn("No token found — user probably not logged in");
-    return { rating: 0 };
+    return { rating: 0 }; 
+
   }
 
   const res = await fetch(`${BACKEND_BASE}/api/ratings/user/${movieId}`, {
@@ -115,11 +128,15 @@ export const getUserRating = async (movieId) => {
   });
 
   if (!res.ok) {
+  
+
     if (res.status === 401 || res.status === 403) {
       console.warn(`Token rejected with status ${res.status}`);
-      localStorage.removeItem("token");
+      localStorage.removeItem("token"); 
+
       return { rating: 0 };
     }
+
     throw new Error(`Failed to fetch user rating: ${res.status}`);
   }
 
@@ -130,6 +147,7 @@ export const getAverageRating = async (movieId) => {
   const res = await fetch(`${BACKEND_BASE}/api/ratings/average/${movieId}`);
   return res.json();
 };
+
 
 export const getMovieDetails = async (movieId) => {
   const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
