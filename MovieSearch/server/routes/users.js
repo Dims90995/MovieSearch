@@ -3,10 +3,10 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-// Register new user
+
 router.post('/', async (req, res) => {
   try {
-    console.log("Incoming request body:", req.body); // 👈 Add this
+    console.log("Incoming request body:", req.body); 
 
     const { username, email, password } = req.body;
 
@@ -18,16 +18,16 @@ router.post('/', async (req, res) => {
 
     const user = new User({ username, email, password });
     const savedUser = await user.save();
-    console.log("User saved:", savedUser); // 👈 Add this
+    console.log("User saved:", savedUser); 
 
     res.status(201).json({ message: "User created successfully" });
   } catch (err) {
-    console.error("Register error:", err); // 👈 Add this
+    console.error("Register error:", err); 
     res.status(500).json({ error: "Error creating user" });
   }
 });
 
-// Get all users (excluding passwords)
+
 const jwt = require('jsonwebtoken');
 
 router.post('/login', async (req, res) => {
@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
 
-  // Create JWT token
+
   const token = jwt.sign(
     { userId: user._id, username: user.username },
     process.env.JWT_SECRET,
